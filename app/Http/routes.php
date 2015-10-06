@@ -10,7 +10,18 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController',
+]);
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('pages.home');
 });
+
+Route::get('about', function() {
+    return view('pages.about');
+});
+
+Route::resource('projects', 'ProjectController');
+
