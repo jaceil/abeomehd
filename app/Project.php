@@ -8,8 +8,8 @@ class Project extends Model
 {
     protected $fillable = ['title'];
 
-    public function mouse()
+    public function mice()
     {
-        $this->hasMany('App\Mouse');
+        return $this->hasMany('App\Mouse');
     }
 }

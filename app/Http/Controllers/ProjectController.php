@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -42,12 +43,15 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param Project $project
      * @return \Illuminate\Http\Response
+     * @internal param $Project
      */
-    public function show($id)
+    public function show(Project $project)
     {
-        //
+        $mice = $project->mice()->get()->all();
+
+        return view('projects.show', compact('project', 'mice'));
     }
 
     /**

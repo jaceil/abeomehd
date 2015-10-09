@@ -16,17 +16,32 @@ class Mouse extends Model
         'injectionDate'
     ];
 
-    public function setInjectionDateAttribute($date)
-    {
-        $this->attributes['injectionDate'] = Carbon::parse($date);
-    }
-
-    public function setHarvestDateAttribute($date)
-    {
-        $this->attributes['harvestDate'] = Carbon::parse($date);
-    }
+//    protected $dates = ['injectionDate', 'harvestDate'];
+//
+//    public function setInjectionDateAttribute($date)
+//    {
+//        $this->attributes['injectionDate'] = Carbon::parse($date);
+//    }
+//
+//    public function setHarvestDateAttribute($date)
+//    {
+//        $this->attributes['harvestDate'] = Carbon::parse($date);
+//    }
+    /**
+     * A mouse belongs to a project.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function project()
     {
-        $this->belongsTo('App\Project');
+        return $this->belongsTo('App\Project');
+    }
+
+    /**
+     * A mouse has many plates.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function plates()
+    {
+        return $this->hasMany('App\Plate');
     }
 }

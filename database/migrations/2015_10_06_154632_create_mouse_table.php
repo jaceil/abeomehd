@@ -15,7 +15,7 @@ class CreateMouseTable extends Migration
         Schema::create('mice', function (Blueprint $table) {
             $table->increments('id')->unique();
             $table->integer('project_id')->unsigned();
-            $table->foreign('project_id')->references('id')->on('project')->onDelete('cascade');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->string('name', 40);
             $table->string('antigen');
             $table->char('gender');
