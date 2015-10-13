@@ -28,5 +28,6 @@ Route::get('about', function() {
 });
 
 Route::resource('projects', 'ProjectController');
+Route::resource('plates', 'PlatesController');
 //Route::get('projects/{name}', 'ProjectController@show');
 

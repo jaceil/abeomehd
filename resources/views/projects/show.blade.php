@@ -18,13 +18,13 @@
                         @foreach($mice as $mouse)
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><a class="panel-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseInnerOne">
+                                <h4 class="panel-title"><a class="panel-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{$mouse->name}}">
                                         {{$mouse->name}}
                                     </a>
                                 </h4>
                             </div>
 
-                            <div id="collapseInnerOne" class="panel-body collapse">
+                            <div id="{{$mouse->name}}" class="panel-body collapse">
                                 <div class="panel-inner">
                                    <table class="table table-bordered">
                                        <thead>
@@ -32,7 +32,7 @@
                                        </thead>
                                        <tbody>
                                        @foreach($mouse->plates()->get()->all() as $plate)
-                                           <tr><td>{{$plate->name}}</td><td>{{$plate->created_at}}</td><td>{{$plate->description}}</td>
+                                           <tr><td><a href="{{action('PlatesController@show', [$plate->id])}}">{{$plate->name}}</a></td><td>{{$plate->created_at}}</td><td>{{$plate->description}}</td>
                                                <td>
                                                    @if($plate->isProcessed === '1')
                                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
@@ -44,14 +44,11 @@
                                    </table>
                                 </div>
                             </div>
-
                         </div>
                         @endforeach
                     </div>
-
-                    <!-- Inner accordion ends here -->
-
                 </div>
+
             </div>
         </div>
         <div class="panel panel-default">

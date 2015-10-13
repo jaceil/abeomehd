@@ -15,4 +15,9 @@ class Plate extends Model
     {
         return $this->belongsTo('App\Mouse');
     }
+
+    public function children()
+    {
+        return $this->belongsToMany('App\childPlates')->withTimestamps();
+    }
 }
