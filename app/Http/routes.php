@@ -29,5 +29,6 @@ Route::get('about', function() {
 
 Route::resource('projects', 'ProjectController');
 Route::resource('plates', 'PlatesController');
+Route::post('plates/{plates}/photos', 'PlatesController@addPhoto');
 //Route::get('projects/{name}', 'ProjectController@show');
 

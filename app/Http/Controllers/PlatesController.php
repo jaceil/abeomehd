@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Photo;
 use App\Plate;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PlatesController extends Controller
 {
@@ -50,6 +52,38 @@ class PlatesController extends Controller
     {
         $plate = Plate::findOrFail($id);
         return view('plates.show', compact('plate'));
+    }
+
+    /**
+     *  Add a photo to a plate based on id.
+     * @param $id
+     * @param Request $request
+     * @return string
+     */
+    public function addPhoto($id, Request $request)
+    {
+//        $this->validate($request, [
+//           'file' => 'required|mimes:jpg,jpeg,bmp,png'
+//        ]);
+//        $file = $request->file('file');
+//        $name = time() . $file->getClientOriginalName();
+//
+//        $file->move('plate-photos', $name);
+//        $plate = Plate::findOrFail($id);
+//        $plate->photos()->create(['name' => "{$name}", 'path' => "/plate-photos/{$name}", 'thumbnail_path' => "/plate-photos/tn-{$name}"]);
+        $photo = $this->makePhoto($request->file('file'));
+
+        Plate::findOrFail($id)->addPhoto($photo);
+    }
+
+    /**
+     * Store in the file.
+     * @param UploadedFile $file
+     * @return mixed
+     */
+    protected function makePhoto(UploadedFile $file)
+    {
+        return Photo::named($file->getClientOriginalName())->move($file);
     }
 
     /**

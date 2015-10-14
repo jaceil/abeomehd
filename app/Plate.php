@@ -16,8 +16,22 @@ class Plate extends Model
         return $this->belongsTo('App\Mouse');
     }
 
-    public function children()
+    /**
+     * A plate can have many photos.
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function photos()
     {
-        return $this->belongsToMany('App\childPlates')->withTimestamps();
+        return $this->hasMany('App\Photo');
+    }
+
+    /**
+     * Create the photo instance in the database.
+     * @param Photo $photo
+     * @return Model
+     */
+    public function addPhoto(Photo $photo)
+    {
+        return $this->photos()->save($photo);
     }
 }
