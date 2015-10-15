@@ -71,7 +71,7 @@ class PlatesController extends Controller
 //        $file->move('plate-photos', $name);
 //        $plate = Plate::findOrFail($id);
 //        $plate->photos()->create(['name' => "{$name}", 'path' => "/plate-photos/{$name}", 'thumbnail_path' => "/plate-photos/tn-{$name}"]);
-        $photo = $this->makePhoto($request->file('file'));
+        $photo = $this->makePhoto($request->file('photo'));
 
         Plate::findOrFail($id)->addPhoto($photo);
     }
