@@ -4519,7 +4519,8 @@ a.badge:focus {
     margin-right: auto; }
   .thumbnail .caption {
     padding: 9px;
-    color: #333333; }
+    color: #333333;
+    word-wrap: break-word; }
 
 a.thumbnail:hover,
 a.thumbnail:focus,

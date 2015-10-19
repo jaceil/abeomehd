@@ -1,5 +1,13 @@
 @extends('layout')
 
+@section('styles')
+    <style>
+    .btn {
+        padding: 0px 6px;
+    }
+    </style>
+@stop
+
 @section('content')
     <h2>{{ $project->name }}</h2>
     <hr>
@@ -7,12 +15,13 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a class="panel-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseTwo">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#accordion1" href="#projectMice">
                         Project Mice
                     </a>
+                    <a href="{{action('MouseController@create', [$project->id])}}"><button class="panel-toggle btn btn-success pull-right">+ Add Mouse</button></a>
                 </h4>
             </div>
-            <div id="collapseTwo" class="panel-body collapse">
+            <div id="projectMice" class="panel-body collapse">
                 <div class="panel-inner">
                     <div class="panel-group" id="accordion2">
                         @foreach($mice as $mouse)
@@ -21,6 +30,7 @@
                                 <h4 class="panel-title"><a class="panel-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{$mouse->name}}">
                                         {{$mouse->name}}
                                     </a>
+                                    <a href="{{action('MouseController@create', [$project->id])}}"><button class="panel-toggle btn btn-success pull-right">+ Add Plates</button></a>
                                 </h4>
                             </div>
 
@@ -54,12 +64,13 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a class="panel-toggle" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne">
+                    <a class="panel-toggle" data-toggle="collapse" data-parent="#accordion1" href="#projectHits">
                         Project Hits
                     </a>
+                    <button class="panel-toggle btn btn-success pull-right">+</button>
                 </h4>
             </div>
-            <div id="collapseOne" class="panel-body collapse">
+            <div id="projectHits" class="panel-body collapse">
                 <div class="panel-inner">
                     This is a simple accordion inner content...
                 </div>

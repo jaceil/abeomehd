@@ -16,12 +16,14 @@ elixir(function(mix) {
 
     mix.styles([
         'app.css',
-        'dropzone.css'
+        'dropzone.css',
+        'lity.css'
     ]);
 
     mix.scripts([
         'jquery.min.js',
         'bootstrap.min.js',
-        'dropzone.js'
+        'dropzone.js',
+        'lity.js'
     ]);
 });

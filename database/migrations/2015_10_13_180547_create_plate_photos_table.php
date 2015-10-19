@@ -19,6 +19,7 @@ class CreatePlatePhotosTable extends Migration
             $table->string('name');
             $table->string('path');
             $table->string('thumbnail_path');
+            $table->text('caption');
             $table->timestamps();
         });
     }

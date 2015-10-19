@@ -28,6 +28,8 @@ Route::get('about', function() {
 });
 
 Route::resource('projects', 'ProjectController');
+Route::resource('mice', 'MouseController');
+Route::get('mice/create/{id}', ['uses' => 'MouseController@create']);
 Route::resource('plates', 'PlatesController');
 Route::post('plates/{plates}/plate-photos', 'PlatesController@addPhoto');
 //Route::get('projects/{name}', 'ProjectController@show');

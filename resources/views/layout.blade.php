@@ -7,13 +7,16 @@
     <link rel="stylesheet" href="/css/all.css">
 </head>
 <body>
+    @yield('styles')
     @include('nav')
 
     <div class="container">
         @yield('content')
     </div>
 
+
     <script src="/js/all.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     @yield('scripts')
 </body>
 </html>

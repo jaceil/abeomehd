@@ -4,10 +4,12 @@
     <div class="row">
         <div class="col-md-4">
             <h2>{{$plate->name}}</h2>
+            {{$plate->description}}<br>
             <hr>
             <p>
+                Mouse: {{$plate->mouse->name}} <br>
                 Dated: {{$plate->created_at}} <br>
-                Description: {{$plate->description}}<br>
+
             </p>
         </div>
         <div class="col-md-8 gallery">
@@ -15,8 +17,11 @@
             <div class="row">
                 @foreach($set as $photo)
                     <div class="col-md-4 gallery_image">
-                        <a href="#" class="thumbnail">
+                        <a href="/{{$photo->path}}" class="thumbnail" data-lity>
                             <img src="/{{$photo->thumbnail_path}}" alt="" >
+                            <div class="caption">
+                                <p>{{$photo->caption}}</p>
+                            </div>
                         </a>
                     </div>
                 @endforeach
