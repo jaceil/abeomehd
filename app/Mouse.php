@@ -2,11 +2,13 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Mouse extends Model
 {
     protected $fillable = [
+        'project_id',
         'name',
         'antigen',
         'gender',
@@ -16,17 +18,17 @@ class Mouse extends Model
         'injectionDate'
     ];
 
-//    protected $dates = ['injectionDate', 'harvestDate'];
-//
-//    public function setInjectionDateAttribute($date)
-//    {
-//        $this->attributes['injectionDate'] = Carbon::parse($date);
-//    }
-//
-//    public function setHarvestDateAttribute($date)
-//    {
-//        $this->attributes['harvestDate'] = Carbon::parse($date);
-//    }
+    protected $dates = ['injectionDate', 'harvestDate'];
+
+    public function setInjectionDateAttribute($date)
+    {
+        $this->attributes['injectionDate'] = Carbon::createFromFormat('Y-m-d', $date);
+    }
+
+    public function setHarvestDateAttribute($date)
+    {
+        $this->attributes['harvestDate'] = Carbon::createFromFormat('Y-m-d', $date);
+    }
     /**
      * A mouse belongs to a project.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

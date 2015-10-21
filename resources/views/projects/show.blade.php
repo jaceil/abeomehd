@@ -30,12 +30,12 @@
                                 <h4 class="panel-title"><a class="panel-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{$mouse->name}}">
                                         {{$mouse->name}}
                                     </a>
-                                    <a href="{{action('MouseController@create', [$project->id])}}"><button class="panel-toggle btn btn-success pull-right">+ Add Plates</button></a>
                                 </h4>
                             </div>
 
                             <div id="{{$mouse->name}}" class="panel-body collapse">
                                 <div class="panel-inner">
+
                                    <table class="table table-bordered">
                                        <thead>
                                         <tr><th>Plate ID</th><th>Date</th><th>Info</th><th>Processed?</th></tr>
@@ -52,6 +52,22 @@
                                        @endforeach
                                        </tbody>
                                    </table>
+                                    <!-- Split button -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success"><a href="{{action('PlatesController@create', [$mouse->id])}}">+ Add Plates</a></button>
+                                        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li role="separator" class="divider"></li>
+                                            <li><a href="#">Separated link</a></li>
+                                        </ul>
+                                    </div>
+                                    {{--<a href="{{action('PlatesController@create', [$mouse->id])}}"><button class="panel-toggle btn btn-success">+ Add Plates</button></a>--}}
                                 </div>
                             </div>
                         </div>

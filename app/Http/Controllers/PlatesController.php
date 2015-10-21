@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mouse;
 use App\Photo;
 use App\Plate;
 use Illuminate\Http\Request;
@@ -26,9 +27,15 @@ class PlatesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $mouse = Mouse::findOrFail($id);
+        $plates = $mouse->plates()->get();
+        if(is_null($mouse->plates())){
+            $plates = 0;
+        }
+
+        return view('plates.create', compact('plates'));
     }
 
     /**
@@ -39,7 +46,11 @@ class PlatesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $plate = Plate::create($request->all());
+
+        $plates = Mouse::findOrFail($plate->mouse_id)->plates()->get();
+
+        return view('plates.create', compact('plates'));
     }
 
     /**

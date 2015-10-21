@@ -6,7 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plate extends Model
 {
-
+    protected $fillable = [
+        'mouse_id',
+        'name',
+        'plate_type',
+        'description',
+        'isProcessed'
+    ];
     /**
      * A plate belongs to a mouse.
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

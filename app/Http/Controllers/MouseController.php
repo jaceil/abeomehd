@@ -43,7 +43,11 @@ class MouseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $mouse = Mouse::create($request->all());
+
+        $mice = Project::findOrFail($mouse->project_id)->mice()->latest()->get();
+
+        return view('mice.create', compact('mice'));
     }
 
     /**
