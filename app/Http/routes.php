@@ -33,5 +33,6 @@ Route::get('mice/create/{id}', ['uses' => 'MouseController@create']);
 Route::resource('plates', 'PlatesController');
 Route::get('plates/create/{id}', ['uses' => 'PlatesController@create']);
 Route::post('plates/{plates}/plate-photos', 'PlatesController@addPhoto');
+Route::post('hits', 'PlatesController@storehits');
 //Route::get('projects/{name}', 'ProjectController@show');
 

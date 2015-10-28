@@ -46,4 +46,13 @@ class Mouse extends Model
     {
         return $this->hasMany('App\Plate');
     }
+
+    /**
+     * Check to see if the collection is empty or not.
+     * @return bool
+     */
+    public function hasPlate()
+    {
+        return (bool) $this->plates()->first();
+    }
 }

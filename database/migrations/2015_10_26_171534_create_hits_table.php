@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePlatePhotosTable extends Migration
+class CreateHitsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,14 +12,17 @@ class CreatePlatePhotosTable extends Migration
      */
     public function up()
     {
-        Schema::create('plate_photos', function (Blueprint $table) {
+        Schema::create('hits', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('project_id');
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->unsignedInteger('mouse_id');
+            $table->foreign('mouse_id')->references('id')->on('mice')->onDelete('cascade');
             $table->unsignedInteger('plate_id');
             $table->foreign('plate_id')->references('id')->on('plates')->onDelete('cascade');
-            $table->string('name');
-            $table->string('path');
-            $table->string('thumbnail_path');
-            $table->text('caption');
+            $table->string('well');
+            $table->string('abmno')->nullable();
+            $table->integer('status');
             $table->timestamps();
         });
     }
@@ -31,6 +34,6 @@ class CreatePlatePhotosTable extends Migration
      */
     public function down()
     {
-        Schema::drop('plate_photos');
+        Schema::drop('hits');
     }
 }

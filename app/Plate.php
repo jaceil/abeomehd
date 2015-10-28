@@ -4,6 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Plate
+ * @package App
+ */
 class Plate extends Model
 {
     protected $fillable = [
@@ -30,6 +34,7 @@ class Plate extends Model
     {
         return $this->hasMany('App\Photo');
     }
+
 
     /**
      * Create the photo instance in the database.

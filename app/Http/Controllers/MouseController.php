@@ -30,9 +30,9 @@ class MouseController extends Controller
     public function create($id)
     {
         $project = Project::findOrFail($id);
-        $mice = $project->mice()->latest()->get();
+//        $mice = $project->mice()->latest()->get();
 
-        return view('mice.create', compact('mice'));
+        return view('mice.create', compact('project'));
     }
 
     /**
@@ -45,9 +45,9 @@ class MouseController extends Controller
     {
         $mouse = Mouse::create($request->all());
 
-        $mice = Project::findOrFail($mouse->project_id)->mice()->latest()->get();
+        $project = Project::findOrFail($mouse->project_id);
 
-        return view('mice.create', compact('mice'));
+        return view('mice.create', compact('project'));
     }
 
     /**
@@ -94,4 +94,5 @@ class MouseController extends Controller
     {
         //
     }
+
 }

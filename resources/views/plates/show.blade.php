@@ -3,13 +3,33 @@
 @section('content')
     <div class="row">
         <div class="col-md-4">
+            {{--<a href="{{action('PlatesController@destroy', [$plate->id, $plate->mouse->project->id])}}"><button class="btn btn-danger pull-right">Delete Table</button></a>--}}
             <h2>{{$plate->name}}</h2>
-            {{$plate->description}}<br>
+            {{$plate->description}}<br><br>
             <hr>
             <p>
                 Mouse: {{$plate->mouse->name}} <br>
-                Dated: {{$plate->created_at}} <br>
+                Dated: {{$plate->created_at}} <br><br><br>
 
+                {!! Form::open(['action' => 'PlatesController@storehits']) !!}
+                        <!--Hiddens text field -->
+
+                        <div class="form-group">
+                                {!! Form::hidden('project_id', $plate->mouse->project_id, ['class' => 'form-control']) !!}
+                                {!! Form::hidden('mouse_id', $plate->mouse->id, ['class' => 'form-control']) !!}
+                                {!! Form::hidden('plate_id', $plate->id, ['class' => 'form-control']) !!}
+                        </div>
+                        <!--Hits text field -->
+                    <div class="form-group">
+                        {!! Form::label('wells', 'Hits:') !!}
+                        {!! Form::select('wells[]', $wells, null, ['id' => 'hits', 'class' => 'form-control', 'multiple']) !!}
+                    </div>
+
+                    <!--  submit field -->
+                    <div class="form-group">
+                        {!! Form::submit('Add Hits', ['class' => 'btn btn-primary form-control']) !!}
+                    </div>
+                {!! Form::close() !!}
             </p>
         </div>
         <div class="col-md-8 gallery">
@@ -43,4 +63,7 @@
         acceptedFiles: '.jpg, .jpeg, .png, .bmp'
     };
    </script>
+    <script>
+        $('#hits').select2();
+    </script>
 @stop
