@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateMouseRequest;
 use App\Mouse;
 use App\Project;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
 class MouseController extends Controller
 {
@@ -41,12 +43,12 @@ class MouseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateMouseRequest $request)
     {
         $mouse = Mouse::create($request->all());
 
         $project = Project::findOrFail($mouse->project_id);
-
+        flash()->success('Mouse Added', '');
         return view('mice.create', compact('project'));
     }
 
@@ -69,7 +71,9 @@ class MouseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $mouse = Mouse::findOrFail($id);
+
+        return view('mice.edit', compact('mouse'));
     }
 
     /**
@@ -79,9 +83,13 @@ class MouseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreateMouseRequest $request, $id)
     {
-        //
+        $input = Input::except('_method', '_token');
+        $mouse = Mouse::findOrFail($id);
+        $mouse->update($input);
+
+        return redirect('projects/' . $mouse->project_id);
     }
 
     /**

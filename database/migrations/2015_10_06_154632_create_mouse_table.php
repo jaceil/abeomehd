@@ -17,12 +17,13 @@ class CreateMouseTable extends Migration
             $table->integer('project_id')->unsigned();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->string('name', 40);
+            $table->integer('days');
             $table->string('antigen');
             $table->char('gender');
             $table->string('adjuvant');
             $table->date('injectionDate');
-            $table->date('harvestDate');
-            $table->string('titer');
+            $table->date('harvestDate')->nullable();
+            $table->string('titer')->nullable();
             $table->timestamps();
         });
     }

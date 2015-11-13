@@ -38,13 +38,13 @@
 
                                    <table class="table table-bordered">
                                        <thead>
-                                        <tr><th>Plate ID</th><th>Date</th><th>Info</th><th>Processed?</th></tr>
+                                        <tr><th>Plate ID</th><th>Type</th><th>Info</th><th>Date</th><th>Processed?</th></tr>
                                        </thead>
                                        <tbody>
                                        @foreach($mouse->plates()->get()->all() as $plate)
-                                           <tr><td><a href="{{action('PlatesController@show', [$plate->id])}}">{{$plate->name}}</a></td><td>{{$plate->created_at}}</td><td>{{$plate->description}}</td>
+                                           <tr><td><a href="{{action('PlatesController@show', [$plate->id])}}">{{$plate->name}}</a></td><td>{{$plate->plate_type}}</td><td>{{$plate->description}}</td><td>{{$plate->created_at}}</td>
                                                <td>
-                                                   @if($plate->isProcessed === '1')
+                                                   @if($plate->isProcessed == '1')
                                                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                                                    @endif
                                                </td>
@@ -89,11 +89,11 @@
                 <div class="panel-inner">
                     <table class="table table-bordered">
                         <thead>
-                            <tr><th>Mouse</th><th>Plate</th><th>Well</th><th>Abeome #</th><th>Status</th></tr>
+                            <tr><th>ID</th><th>Mouse</th><th>Plate</th><th>Well</th><th>Abeome #</th><th>Status</th></tr>
                         </thead>
                         <tbody>
                             @foreach($project->hits as $hit)
-                                <tr><td>{{$hit->mouse->name}}</td><td>{{$hit->plate->name}}</td><td>{{$hit->well}}</td><td>{{$hit->abmno}}</td><td>{{$hit->status}}</td></tr>
+                                <tr><td>{{$hit->id}}</td><td>{{$hit->mouse->name}}</td><td>{{$hit->plate->name}}</td><td>{{$hit->well}}</td><td>{{$hit->abmno}}</td><td>{{$hit->status}}</td></tr>
                             @endforeach
                         </tbody>
                     </table>

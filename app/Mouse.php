@@ -11,6 +11,7 @@ class Mouse extends Model
         'project_id',
         'name',
         'antigen',
+        'days',
         'gender',
         'adjuvant',
         'titer',
@@ -27,7 +28,9 @@ class Mouse extends Model
 
     public function setHarvestDateAttribute($date)
     {
-        $this->attributes['harvestDate'] = Carbon::createFromFormat('Y-m-d', $date);
+        if($date != null) {
+            $this->attributes['harvestDate'] = Carbon::createFromFormat('Y-m-d', $date);
+        }
     }
     /**
      * A mouse belongs to a project.

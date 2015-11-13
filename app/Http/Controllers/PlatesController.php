@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePlateRequest;
 use App\Mouse;
 use App\Photo;
 use App\Plate;
@@ -10,6 +11,7 @@ use App\Hit;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PlatesController extends Controller
@@ -51,7 +53,7 @@ class PlatesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePlateRequest $request)
     {
         $plate = Plate::create($request->all());
 
@@ -113,8 +115,7 @@ class PlatesController extends Controller
 
         $plate = Plate::findOrFail($id);
         $plate->addPhoto($photo);
-        $plate->isProcessed = '1';
-        $plate->update();
+        $plate->update(['isProcessed' => '1']);
     }
 
     /**
@@ -135,7 +136,9 @@ class PlatesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $plate = Plate::findOrFail($id);
+
+        return view('plates.edit', compact('plate'));
     }
 
     /**
@@ -145,9 +148,14 @@ class PlatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CreatePlateRequest $request, $id)
     {
-        //
+        $input = Input::except('_method', '_token');
+        $wells = $this->wells;
+        $plate = Plate::findOrFail($id);
+        $plate->update($input);
+
+        return view('plates.show', compact('plate', 'wells'));
     }
 
     /**

@@ -17,13 +17,17 @@ elixir(function(mix) {
     mix.styles([
         'app.css',
         'dropzone.css',
-        'lity.css'
+        'lity.css',
+        'sweetalert.css'
     ]);
 
     mix.scripts([
         'jquery.min.js',
         'bootstrap.min.js',
         'dropzone.js',
-        'lity.js'
+        'lity.js',
+        'sweetalert-dev.js',
+        'vue.min.js',
+        'vue-resource.min.js'
     ]);
 });

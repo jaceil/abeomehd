@@ -27,6 +27,16 @@ Route::get('about', function() {
     return view('pages.about');
 });
 
+/* Testing! */
+get('api/plates', function() {
+    return App\Plate::all();
+});
+
+post('api/plates', function() {
+    return App\Plate::create(Request::all());
+});
+//
+
 Route::resource('projects', 'ProjectController');
 Route::resource('mice', 'MouseController');
 Route::get('mice/create/{id}', ['uses' => 'MouseController@create']);
