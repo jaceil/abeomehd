@@ -30,6 +30,12 @@
                                 <h4 class="panel-title"><a class="panel-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{$mouse->name}}">
                                         {{$mouse->name}}
                                     </a>
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="30"
+                                             aria-valuemin="0" aria-valuemax="100" style="width:30%">
+                                            30% Complete
+                                        </div>
+                                    </div>
                                 </h4>
                             </div>
 
@@ -81,7 +87,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">
                     <a class="panel-toggle" data-toggle="collapse" data-parent="#accordion1" href="#projectHits">
-                        Project Hits
+                        Project Hits ({{$project->hits->count()}})
                     </a>
                 </h4>
             </div>
@@ -93,7 +99,19 @@
                         </thead>
                         <tbody>
                             @foreach($project->hits as $hit)
-                                <tr><td>{{$hit->id}}</td><td>{{$hit->mouse->name}}</td><td>{{$hit->plate->name}}</td><td>{{$hit->well}}</td><td>{{$hit->abmno}}</td><td>{{$hit->status}}</td></tr>
+                                <tr><td>{{$hit->id}}</td><td>{{$hit->mouse->name}}</td><td>{{$hit->plate->name}}</td><td>{{$hit->well}}</td><td>{{$hit->abmno}}</td>
+                                    <td>
+                                        @if($hit->status == '0')
+                                            Neutralization
+                                        @elseif($hit->status == '1')
+                                            Clone Confirmation
+                                        @elseif($hit->status == '2')
+                                            IC 50 Determination
+                                        @elseif($hit->status == '3')
+                                            Affinity Determination
+                                        @endif
+                                    </td>
+                                </tr>
                             @endforeach
                         </tbody>
                     </table>
