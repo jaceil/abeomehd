@@ -28,6 +28,7 @@ elixir(function(mix) {
         'lity.js',
         'sweetalert-dev.js',
         'vue.min.js',
-        'vue-resource.min.js'
+        'vue-resource.min.js',
+        'jquery.cookie.js'
     ]);
 });

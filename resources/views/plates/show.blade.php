@@ -4,8 +4,9 @@
     <div class="row">
         <div class="col-md-4">
             {{--<a href="{{action('PlatesController@destroy', [$plate->id, $plate->mouse->project->id])}}"><button class="btn btn-danger pull-right">Delete Table</button></a>--}}
-            <h2>{{$plate->name}}</h2>
-            {{$plate->description}}<br><br>
+            <h2>{{$plate->name}} </h2>
+            {{$plate->description}}<br>
+            <a href="{{action('PlatesController@edit', [$plate->id])}}">Edit</a>  <a href="{{action('PlatesController@destroy', [$plate->id])}}">Delete</a><br>
             <hr>
             <p>
                 Mouse: {{$plate->mouse->name}} <br>
@@ -21,6 +22,12 @@
             <div class="row">
                 @foreach($set as $photo)
                     <div class="col-md-4 gallery_image">
+                        <form method="POST" action="/plate-photos/{{$photo->id}}">
+                            {!! csrf_field() !!}
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit">DELETE</button>
+                        </form>
+
                         <a href="/{{$photo->path}}" class="thumbnail" data-lity>
                             <img src="/{{$photo->thumbnail_path}}" alt="" >
                             <div class="caption">

@@ -1,6 +1,4 @@
-<div class="form-group">
-    {!! Form::hidden('mouse_id', $plate->mouse->id, ['class' => 'form-control']) !!}
-</div>
+
 <!--Name text field -->
 
 <div class="form-group">

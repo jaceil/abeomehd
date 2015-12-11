@@ -14,15 +14,14 @@
                 <li class="active"><a href="/">Home</a></li>
                 <li><a href="/about">About</a></li>
                 <li class="dropdown">
-                    <a href="/projects" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects<span class="caret"></span></a>
+                    <a href="/projects" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Overview<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         @foreach($projects as $project)
                             <li><a href="{{action('ProjectController@show', [$project->id])}}">{{$project->name}}</a></li>
                         @endforeach
-                        {{--<li role="separator" class="divider"></li>--}}
-                        {{--<li class="dropdown-header">Nav header</li>--}}
-                        {{--<li><a href="#">Separated link</a></li>--}}
-                        {{--<li><a href="#">One more separated link</a></li>--}}
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{{action('MouseController@index')}}">Mice</a></li>
+                        <li><a href="{{action('PlatesController@index')}}">Plates</a></li>
                     </ul>
                 </li>
             </ul>

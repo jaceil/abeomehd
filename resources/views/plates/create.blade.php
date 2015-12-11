@@ -26,7 +26,10 @@
     <h2>Add New Plate</h2>
     <div class="col-md-6">
     {!! Form::open(['url' => 'plates']) !!}
-        @include('plates.addplateform', ['submitButtonText' => 'Add Plate'])
+        <div class="form-group">
+            {!! Form::hidden('mouse_id', $mouse->id, ['class' => 'form-control']) !!}
+        </div>
+        @include('plates.plateform', ['submitButtonText' => 'Add Plate'])
     {!! Form::close() !!}
     </div>
 

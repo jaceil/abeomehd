@@ -1,3 +1,4 @@
+@inject('statusBar', 'App\statusbar')
 @extends('layout')
 
 @section('styles')
@@ -12,34 +13,40 @@
     <h2>{{ $project->name }}</h2>
     <hr>
     <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
+        <div class="panel panel-default accordion-panel">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a class="panel-toggle" data-toggle="collapse" data-parent="#accordion1" href="#projectMice">
+                    <a class="panel-toggle" data-toggle="collapse" href="#projectMice">
                         Project Mice
                     </a>
-                    <a href="{{action('MouseController@create', [$project->id])}}"><button class="panel-toggle btn btn-success pull-right">+ Add Mouse</button></a>
+                    <a href="{{action('MouseController@create', [$project->id])}}">
+                        <button class="panel-toggle btn btn-success pull-right">+ Add Mouse</button>
+                    </a>
                 </h4>
             </div>
             <div id="projectMice" class="panel-body collapse">
                 <div class="panel-inner">
-                    <div class="panel-group" id="accordion2">
+                    <div class="panel-group" id="mouseAccordion">
                         @foreach($mice as $mouse)
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h4 class="panel-title"><a class="panel-toggle" data-toggle="collapse" data-parent="#accordion2" href="#{{$mouse->name}}">
+                                <h4 class="panel-title">
+                                    <a class="panel-toggle"
+                                       data-toggle="collapse"
+                                       data-parent="#mouseAccordion" href="#mouse-{{$mouse->name}}">
                                         {{$mouse->name}}
                                     </a>
                                     <div class="progress">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="30"
-                                             aria-valuemin="0" aria-valuemax="100" style="width:30%">
-                                            30% Complete
+                                        <div class="progress-bar progress-bar-success" role="progressbar"
+                                             aria-valuenow="{{$statusBar->getStatus($mouse)}}"
+                                             aria-valuemin="0" aria-valuemax="100" style="width:{{$statusBar->getStatus($mouse)}}%">
+                                            {{$statusBar->getStatus($mouse)}}% Complete
                                         </div>
                                     </div>
                                 </h4>
                             </div>
 
-                            <div id="{{$mouse->name}}" class="panel-body collapse">
+                            <div id="mouse-{{$mouse->name}}" class="panel-body collapse">
                                 <div class="panel-inner">
 
                                    <table class="table table-bordered">
@@ -66,11 +73,24 @@
                                             <span class="sr-only">Toggle Dropdown</span>
                                         </button>
                                         <ul class="dropdown-menu">
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li role="separator" class="divider"></li>
-                                            <li><a href="#">Separated link</a></li>
+                                            <li>
+                                                {{--{!! Form::open(['action' => 'PlatesController@manyPlates']) !!}--}}
+                                                    {{--<div class="form-group">--}}
+                                                        {{--{!! Form::hidden('mouse_id', $mouse->id, ['class' => 'form-control']) !!}--}}
+                                                    {{--</div>--}}
+                                                    {{--<!--Number text field -->--}}
+
+                                                    {{--<div class="form-group">--}}
+                                                            {{--{!! Form::label('number', 'Number:') !!}--}}
+                                                            {{--{!! Form::text('number', null, ['class' => 'form-control']) !!}--}}
+                                                    {{--</div>--}}
+
+                                                    {{--<!-- submitButton submit field -->--}}
+                                                    {{--<div class="form-group">--}}
+                                                        {{--{!! Form::submit('Submit', ['class' => 'btn btn-primary form-control']) !!}--}}
+                                                    {{--</div>--}}
+                                                {{--{!! Form::close() !!}--}}
+                                            </li>
                                         </ul>
                                     </div>
                                     {{--<a href="{{action('PlatesController@create', [$mouse->id])}}"><button class="panel-toggle btn btn-success">+ Add Plates</button></a>--}}
@@ -83,10 +103,10 @@
 
             </div>
         </div>
-        <div class="panel panel-default">
+        <div class="panel panel-default accordion-panel">
             <div class="panel-heading">
                 <h4 class="panel-title">
-                    <a class="panel-toggle" data-toggle="collapse" data-parent="#accordion1" href="#projectHits">
+                    <a class="panel-toggle" data-toggle="collapse" href="#projectHits">
                         Project Hits ({{$project->hits->count()}})
                     </a>
                 </h4>
@@ -95,11 +115,11 @@
                 <div class="panel-inner">
                     <table class="table table-bordered">
                         <thead>
-                            <tr><th>ID</th><th>Mouse</th><th>Plate</th><th>Well</th><th>Abeome #</th><th>Status</th></tr>
+                            <tr><th>ID</th><th>Abeome #</th><th>Mouse</th><th>Plate</th><th>Well</th><th>Status</th></tr>
                         </thead>
                         <tbody>
                             @foreach($project->hits as $hit)
-                                <tr><td>{{$hit->id}}</td><td>{{$hit->mouse->name}}</td><td>{{$hit->plate->name}}</td><td>{{$hit->well}}</td><td>{{$hit->abmno}}</td>
+                                <tr><td>{{$hit->id}}</td><td>{{$hit->abmno}}</td><td>{{$hit->mouse->name}}</td><td>{{$hit->plate->name}}</td><td>{{$hit->well}}</td>
                                     <td>
                                         @if($hit->status == '0')
                                             Neutralization
@@ -126,20 +146,32 @@
     <script>
         $(document).ready(function () {
             //when a group is shown, save it as the active accordion group
-            $("#accordion").on('shown.bs.collapse', function () {
-                var active = $("#accordion .in").attr('id');
+            $(".accordion-panel").on('shown.bs.collapse', function () {
+                var active = $(this).find(".in").attr('id');
                 $.cookie('activeAccordionGroup', active);
                 //  alert(active);
             });
-            $("#accordion").on('hidden.bs.collapse', function () {
-                $.removeCookie('activeAccordionGroup');
+            $("#mouseAccordion").on('shown.bs.collapse', function () {
+                var active = $(this).find(".in").attr('id');
+                $.cookie('activeMouse', active);
+                //  alert(active);
             });
+
+//            $(".accordion-panel").on('hidden.bs.collapse', function () {
+//                $.cookie('activeMouse', null);
+//                $.removeCookie('activeAccordionGroup');
+//            });
             var last = $.cookie('activeAccordionGroup');
             if (last != null) {
                 //remove default collapse settings
                 $("#accordion .panel-collapse").removeClass('in');
                 //show the account_last visible group
                 $("#" + last).addClass("in");
+            }
+
+            var mouse = $.cookie('activeMouse');
+            if(mouse) {
+                $('.in #' + mouse).addClass("in");
             }
         });
     </script>

@@ -44,5 +44,7 @@ Route::resource('plates', 'PlatesController');
 Route::get('plates/create/{id}', ['uses' => 'PlatesController@create']);
 Route::post('plates/{plates}/plate-photos', 'PlatesController@addPhoto');
 Route::post('hits', 'PlatesController@storehits');
+
+Route::delete('plate-photos/{id}', 'PhotosController@destroy');
 //Route::get('projects/{name}', 'ProjectController@show');
 

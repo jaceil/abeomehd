@@ -31,7 +31,9 @@ class PlatesController extends Controller
      */
     public function index()
     {
-        //
+        $plates = Plate::all();
+
+        return view('plates.all', compact('plates'));
     }
 
     /**
@@ -60,6 +62,36 @@ class PlatesController extends Controller
         $mouse = Mouse::findOrFail($plate->mouse_id);
 
         return view('plates.create', compact('mouse'));
+    }
+
+    public function manyPlates()
+    {
+        return view('plates.createMany');
+    }
+
+    /**
+     * Create many plates simultaneously.
+     * @param CreatePlateRequest $request
+     * @param $number
+     * @return \Illuminate\View\View
+     */
+    public function storeMany(CreatePlateRequest $request, $number)
+    {
+        for($i = $request->get('name'); $i < ($i + $number); $i++)
+        {
+            $data = [
+                'name' => $i,
+                'mouse_id' => $request->get('mouse_id'),
+                'plate_type' => $request->get('plate_type'),
+                'description' => $request->get('description'),
+                'isProcessed' => $request->get('isProcessed')
+            ];
+
+            $plate = Plate::create($data);
+            $mouse = Mouse::findOrFail($plate->mouse_id);
+
+            return view('plates.create', compact('mouse'));
+        }
     }
 
     /**
@@ -164,9 +196,15 @@ class PlatesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, $pid)
+    public function destroy($id)
     {
-        $plate = Plate::findOrFail($id);
+        $photos = Plate::findOrFail($id)->photos();
+        foreach($photos as $photo) {
+            \File::delete([
+                $photo->path,
+                $photo->thumbnail_path
+            ]);
+        }
 
     }
 

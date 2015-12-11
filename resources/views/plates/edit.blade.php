@@ -23,7 +23,10 @@
     <h2>Edit {{$plate->name}}</h2>
     <div class="col-md-6">
         {!! Form::model($plate, ['method' => 'PATCH', 'action' => ['PlatesController@update', $plate->id]]) !!}
-            @include('plates.editplateform', ['submitButtonText' => 'Edit Plate'])
+            <div class="form-group">
+                {!! Form::hidden('mouse_id', $plate->mouse->id, ['class' => 'form-control']) !!}
+            </div>
+            @include('plates.plateform', ['submitButtonText' => 'Edit Plate'])
         {!! Form::close() !!}
     </div>
 

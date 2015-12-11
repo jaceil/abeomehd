@@ -18,7 +18,6 @@
 
 
     <script src="/js/all.js"></script>
-    <script src="https://code.jquery.com/jquery-2.1.4.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.min.js"></script>
     @yield('scripts')
     @include('flash')

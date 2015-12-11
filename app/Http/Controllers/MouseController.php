@@ -19,7 +19,7 @@ class MouseController extends Controller
      */
     public function index()
     {
-        $mice = Mouse::latest()->get();
+        $mice = Mouse::all();
 
         return view('mice.index', compact('mice'));
     }
