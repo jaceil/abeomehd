@@ -6,7 +6,8 @@
             {{--<a href="{{action('PlatesController@destroy', [$plate->id, $plate->mouse->project->id])}}"><button class="btn btn-danger pull-right">Delete Table</button></a>--}}
             <h2>{{$plate->name}} </h2>
             {{$plate->description}}<br>
-            <a href="{{action('PlatesController@edit', [$plate->id])}}">Edit</a>  <a href="{{action('PlatesController@destroy', [$plate->id])}}">Delete</a><br>
+            <a href="{{action('PlatesController@edit', [$plate->id])}}">Edit</a>
+
             <hr>
             <p>
                 Mouse: {{$plate->mouse->name}} <br>
