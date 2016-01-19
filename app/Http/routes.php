@@ -11,28 +11,33 @@
 |
 */
 Route::controllers([
-    'auth' => 'Auth\AuthController',
+    'auth'     => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
 
-Route::get('/', function () {
+Route::get('/', function ()
+{
     return view('pages.home');
 });
 
-Route::get('home', function () {
+Route::get('home', function ()
+{
     return view('pages.home');
 });
 
-Route::get('about', function() {
+Route::get('about', function ()
+{
     return view('pages.about');
 });
 
 /* Testing! */
-get('api/plates', function() {
+get('api/plates', function ()
+{
     return App\Plate::all();
 });
 
-post('api/plates', function() {
+post('api/plates', function ()
+{
     return App\Plate::create(Request::all());
 });
 //
@@ -44,7 +49,18 @@ Route::resource('plates', 'PlatesController');
 Route::get('plates/create/{id}', ['uses' => 'PlatesController@create']);
 Route::post('plates/{plates}/plate-photos', 'PlatesController@addPhoto');
 Route::post('hits', 'PlatesController@storehits');
+Route::post('plates/create/multiple/', ['uses' => 'PlatesController@manyPlates']);
+Route::post('plates/create/multiple/{id}', ['uses' => 'PlatesController@storeMany']);
 
 Route::delete('plate-photos/{id}', 'PhotosController@destroy');
 //Route::get('projects/{name}', 'ProjectController@show');
+
+Route::group(['prefix' => '/api'],
+    function ()
+    {
+        Route::post('hits/{id}/increment', 'HitController@incrementHit');
+        Route::post('hits/{id}/cancel', 'HitController@cancelHit');
+        Route::post('hits/{id}/name', 'HitController@addName');
+    }
+);
 

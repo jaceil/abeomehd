@@ -64,9 +64,18 @@ class PlatesController extends Controller
         return view('plates.create', compact('mouse'));
     }
 
-    public function manyPlates()
+    /**
+     * Create many plates simultaneously.
+     *
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function manyPlates(Request $request)
     {
-        return view('plates.createMany');
+        $id = $request->get('mouse_id');
+        $plateNumber = $request->get('number');
+
+        return view('plates.createmany', compact('id', 'plateNumber'));
     }
 
     /**
@@ -75,14 +84,18 @@ class PlatesController extends Controller
      * @param $number
      * @return \Illuminate\View\View
      */
-    public function storeMany(CreatePlateRequest $request, $number)
+    public function storeMany(CreatePlateRequest $request)
     {
-        for($i = $request->get('name'); $i < ($i + $number); $i++)
+        $count = $request->get('plateNumber');
+        $start = $request->get('name');
+        $total = $start + $count;
+
+        while($start < $total)
         {
             $data = [
-                'name' => $i,
-                'mouse_id' => $request->get('mouse_id'),
-                'plate_type' => $request->get('plate_type'),
+                'name'        => $start,
+                'mouse_id'    => $request->get('mouse_id'),
+                'plate_type'  => $request->get('plate_type'),
                 'description' => $request->get('description'),
                 'isProcessed' => $request->get('isProcessed')
             ];
@@ -90,8 +103,10 @@ class PlatesController extends Controller
             $plate = Plate::create($data);
             $mouse = Mouse::findOrFail($plate->mouse_id);
 
-            return view('plates.create', compact('mouse'));
+            $start++;
         }
+            return view('plates.create', compact('mouse'));
+
     }
 
     /**
